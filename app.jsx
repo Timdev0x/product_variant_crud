@@ -14,17 +14,12 @@ const shopify = new Shopify({
   password: SHOPIFY_API_PASSWORD
 });
 
-
-
-
-
-//Create variant
-
+// Create variant
 async function createVariant() {
   const variant = {
-    product_id: 7712835797132,
-    option1: "Blue",
-    price: "98.00"
+    product_id: 7712905592972,
+    option1: "pink",
+    price: "204.00"
   };
 
   try {
@@ -35,51 +30,52 @@ async function createVariant() {
   }
 }
 
+// createVariant();
 
-createVariant();
-
-
-
-
-
-
-
-//Fetch all variants
-
-async function getVariants(product_id){
+// Fetch all variants
+async function getVariants(product_id) {
   try {
-    const response = await shopify.productVariant.list(product_id)
-    console.log('Product Variants:', response)
-
+    const response = await shopify.productVariant.list(product_id);
+    console.log('Product Variants:', response);
   } catch (error) {
-    console.log('Error getting variants:', error)
-
+    console.log('Error getting variants:', error);
   }
 }
 
+// Uncomment to test fetching variants
+// getVariants(7712835797132);
 
-//getVariants(7712835797132)
-
-
-
-//Update Variant
-
-async function updateVariant(variant_id){
+// Update Variant
+async function updateVariant(variant_id) {
   const updateVariant = {
-    id:variant_id,
-    option1: ' Blue',
-    price:'8.00'
-
-  }
-   try {
-    const response = await shopify.productVariant.update(variant_id, updateVariant)
-    console.log('Updated Variant:', response)
-
+    id: variant_id,
+    option1: 'Pink',
+    price: '800.00'
+  };
+  try {
+    const response = await shopify.productVariant.update(variant_id, updateVariant);
+    console.log('Updated Variant:', response);
   } catch (error) {
-    console.log('Error updating variant:', error)
-
+    console.log('Error updating variant:', error);
   }
 }
 
+// Uncomment to test updating a variant
+ updateVariant(42930067439756);
 
-updateVariant(42741413806220)
+// Delete Variant
+async function deleteVariant(product_id, variant_id) {
+  try {
+    const response = await shopify.productVariant.delete(variant_id);
+    console.log(`Deleted variant with id ${variant_id}`);
+  } catch (error) {
+    console.error('Error deleting variant:', error);
+    if (error.response) {
+      console.error('Response status:', error.response.statusCode);
+      console.error('Response body:', error.response.body);
+    }
+  }
+}
+
+// Test deleting a variant
+// deleteVariant(7712905592972, 42930067439756);
